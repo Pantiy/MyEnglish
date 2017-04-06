@@ -1,10 +1,12 @@
-package com.pantiy.myenglish;
+package com.pantiy.myenglish.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+
+import com.pantiy.myenglish.R;
 
 /**
  * Created by Pantiy on 2017/3/22.

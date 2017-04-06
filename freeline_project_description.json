@@ -35,7 +35,7 @@
         
     ],
     "freeline_cache_dir": "E:\\AndroidStudioProjects\\MyEnglish",
-    "freeline_gradle_plugin_version": "0.8.7",
+    "freeline_gradle_plugin_version": "0.8.6",
     "ignore_resource_ids": [
         "avd_hide_password_1",
         "avd_hide_password_2",
@@ -45,7 +45,7 @@
         "avd_show_password_3"
     ],
     "java_home": "D:\\Java\\jdk1.8.0_102",
-    "launcher": "com.pantiy.myenglish.MainActivity",
+    "launcher": "com.pantiy.myenglish.activity.MainActivity",
     "main_assets_directory": [
         "E:\\AndroidStudioProjects\\MyEnglish\\app\\src\\debug\\assets",
         "E:\\AndroidStudioProjects\\MyEnglish\\app\\src\\main\\assets"

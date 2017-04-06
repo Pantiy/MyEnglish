@@ -1,4 +1,4 @@
-package com.pantiy.myenglish;
+package com.pantiy.myenglish.utils;
 
 import android.net.Uri;
 

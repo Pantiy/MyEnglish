@@ -1,4 +1,4 @@
-package com.pantiy.myenglish;
+package com.pantiy.myenglish.model;
 
 import java.util.ArrayList;
 import java.util.List;

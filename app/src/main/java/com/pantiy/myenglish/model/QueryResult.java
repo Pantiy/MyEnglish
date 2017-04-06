@@ -1,4 +1,4 @@
-package com.pantiy.myenglish;
+package com.pantiy.myenglish.model;
 
 import java.util.List;
 
@@ -62,6 +62,10 @@ public class QueryResult {
             return "无法翻译呦";
         }
         return getQuery() + "\n\n" + getTranslation() + "\n\n" + getBasic() + "\n\n" + getWeb();
+    }
+
+    public boolean equals(QueryResult queryResult) {
+        return this.query.equals(queryResult.getQuery());
     }
 
     private static class Basic {

@@ -5,4 +5,6 @@
     <string name="search_hint">请输入</string>
     <string name="query_button">搜索</string>
 
+    <string name="translate">释义</string>
+
 </resources>

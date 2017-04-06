@@ -1,8 +1,10 @@
-package com.pantiy.myenglish;
+package com.pantiy.myenglish.utils;
 
 import android.os.Handler;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.pantiy.myenglish.model.QueryResult;
+import com.pantiy.myenglish.model.QueryResultLab;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -33,7 +35,7 @@ public class QueryWord {
         mQueryFinishedListener = queryFinished;
     }
 
-    public void get(final String query) {
+    public void get(String query) {
 
         try {
             Request request = new Request.Builder().url(YoudaoClient.getUrl(query)).build();

@@ -1,12 +1,23 @@
-package com.pantiy.myenglish;
+package com.pantiy.myenglish.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+
+import com.pantiy.myenglish.activity.ResultPagerActivity;
+import com.pantiy.myenglish.adapter.HistoryAdapter;
+import com.pantiy.myenglish.adapter.ResultPagerAdapter;
+import com.pantiy.myenglish.model.QueryResultLab;
+import com.pantiy.myenglish.utils.QueryWord;
+import com.pantiy.myenglish.R;
+import com.pantiy.myenglish.utils.YoudaoClient;
+
 import java.lang.reflect.Field;
 
 /**
@@ -14,40 +25,41 @@ import java.lang.reflect.Field;
  * Copyright © 2016 All rights Reserved by Pantiy
  */
 
-public class SearchFragment extends BaseFragment {
+public class QueryFragment extends BaseFragment {
 
-    private static final String TAG = "SearchFragment";
+    private static final String TAG = "QueryFragment";
 
-    private Context mContext;
     private Handler mQueryFinishedHandler;
 
-    private SearchView mQuerySearchView;
-    private TextView mResultTextView;
-    private TextView mHistoryTextView;
+    private HistoryAdapter mHistoryAdapter;
 
-    public static SearchFragment newInstance(Context context) {
-        SearchFragment searchFragment = new SearchFragment();
-        searchFragment.mContext = context;
-        searchFragment.mQueryFinishedHandler = new Handler();
-        return searchFragment;
+    private Context mContext;
+    private SearchView mQuerySearchView;
+    private ListView mHistoryListView;
+
+    public static QueryFragment newInstance(Context context) {
+        QueryFragment queryFragment = new QueryFragment();
+        queryFragment.mContext = context;
+        queryFragment.mQueryFinishedHandler = new Handler();
+        return queryFragment;
     }
 
     @Override
     protected void initViews() {
         mQuerySearchView = (SearchView) mView.findViewById(R.id.query_searchView);
         changeSearchViewStyle();
-        mResultTextView = (TextView) mView.findViewById(R.id.result_textView);
-        mHistoryTextView = (TextView) mView.findViewById(R.id.history_textView);
-        Log.i(TAG, YoudaoClient.getUrl("good"));
+        mHistoryListView = (ListView) mView.findViewById(R.id.history_listView);
     }
 
     @Override
     protected void setupAdapters() {
-
+        mHistoryAdapter = new HistoryAdapter(mContext);
+        mHistoryListView.setAdapter(mHistoryAdapter);
     }
 
     @Override
     protected void setupListeners() {
+
         mQuerySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -63,22 +75,18 @@ public class SearchFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mQuerySearchView.clearFocus();
+    }
+
     private void queryWord(String query) {
         new QueryWordThread(query).start();
     }
 
-    private void showHistory() {
-        String history = "";
-        if (QueryResultLab.get().getQueryResults().size() > 0){
-            for (int i = 0; i < QueryResultLab.get().getQueryResults().size(); i++) {
-                history += QueryResultLab.get().getQueryResults().get(i).getQuery() + "\n";
-            }
-        }
-        mHistoryTextView.setText(history);
-    }
-
     @Override
-    protected int setLayoutRes() {
+    protected int getLayoutRes() {
         return R.layout.fragment_query;
     }
 
@@ -114,8 +122,9 @@ public class SearchFragment extends BaseFragment {
             QueryWord.build(mQueryFinishedHandler, new QueryWord.QueryFinishedListener() {
                 @Override
                 public void onQueryFinished(String result) {
-                    mResultTextView.setText(result);
-                    showHistory();
+                    mHistoryAdapter.notifyDataSetChanged();
+                    Intent intent = new Intent(mContext, ResultPagerActivity.class);
+                    startActivity(intent);
                 }
             }).get(mQuery);
         }
