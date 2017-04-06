@@ -123,7 +123,7 @@ public class QueryFragment extends BaseFragment {
                 @Override
                 public void onQueryFinished(String result) {
                     mHistoryAdapter.notifyDataSetChanged();
-                    Intent intent = new Intent(mContext, ResultPagerActivity.class);
+                    Intent intent = ResultPagerActivity.newInstance(mContext, mQuery);
                     startActivity(intent);
                 }
             }).get(mQuery);

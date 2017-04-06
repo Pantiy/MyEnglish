@@ -1,10 +1,16 @@
 package com.pantiy.myenglish.adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.pantiy.myenglish.fragment.ResultFragment;
+import com.pantiy.myenglish.model.QueryResult;
+import com.pantiy.myenglish.model.QueryResultLab;
+
+import java.util.List;
 
 /**
  * MyEnglish
@@ -15,17 +21,34 @@ import com.pantiy.myenglish.fragment.ResultFragment;
 
 public class ResultPagerAdapter extends FragmentStatePagerAdapter {
 
-    public ResultPagerAdapter(FragmentManager fm) {
+    private String mQuery;
+
+    private Context mContext;
+
+    public ResultPagerAdapter(Context context, FragmentManager fm, String query) {
         super(fm);
+        mContext = context;
+        mQuery = query;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return new ResultFragment();
+        return ResultFragment.newInstance(mContext, getQueryResult(mQuery));
     }
 
     @Override
     public int getCount() {
         return 1;
+    }
+
+    private QueryResult getQueryResult(String query) {
+        List<QueryResult> queryResultList = QueryResultLab.get().getQueryResults();
+        QueryResult queryResult = new QueryResult();
+        for (int i = 0; i < queryResultList.size(); i++) {
+            if (queryResultList.get(i).equals(mQuery)) {
+                queryResult = queryResultList.get(i);
+            }
+        }
+        return queryResult;
     }
 }

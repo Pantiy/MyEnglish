@@ -1,5 +1,7 @@
 package com.pantiy.myenglish.model;
 
+import android.util.Log;
+
 import java.util.List;
 
 /**
@@ -64,8 +66,8 @@ public class QueryResult {
         return getQuery() + "\n\n" + getTranslation() + "\n\n" + getBasic() + "\n\n" + getWeb();
     }
 
-    public boolean equals(QueryResult queryResult) {
-        return this.query.equals(queryResult.getQuery());
+    public boolean equals(String query) {
+        return this.query.equals(query);
     }
 
     private static class Basic {
