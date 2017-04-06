@@ -35,18 +35,7 @@ public class SearchFragment extends BaseFragment {
     @Override
     protected void initViews() {
         mQuerySearchView = (SearchView) mView.findViewById(R.id.query_searchView);
-        mQuerySearchView.setIconified(false);
-        try {
-            Class<?> searchViewClass = mQuerySearchView.getClass();
-            Field field = searchViewClass.getDeclaredField("mSearchPlate");
-            field.setAccessible(true);
-            View view = (View) field.get(mQuerySearchView);
-            view.setBackgroundColor(Color.TRANSPARENT);
-        } catch (NoSuchFieldException ne) {
-            Log.e(TAG, " initViews() ", ne);
-        } catch (IllegalAccessException iae) {
-            Log.e(TAG, " initViews ", iae);
-        }
+        changeSearchViewStyle();
         mResultTextView = (TextView) mView.findViewById(R.id.result_textView);
         mHistoryTextView = (TextView) mView.findViewById(R.id.history_textView);
         Log.i(TAG, YoudaoClient.getUrl("good"));
@@ -61,19 +50,8 @@ public class SearchFragment extends BaseFragment {
     protected void setupListeners() {
         mQuerySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(final String query) {
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            QueryWord.build(mQueryFinishedHandler, new QueryWord.QueryFinishedListener() {
-                                @Override
-                                public void onQueryFinished(String result) {
-                                    mResultTextView.setText(result);
-                                    showHistory();
-                                }
-                            }).get(query);
-                        }
-                    }.start();
+            public boolean onQueryTextSubmit(String query) {
+                queryWord(query);
                 mQuerySearchView.clearFocus();
                 return true;
             }
@@ -83,6 +61,10 @@ public class SearchFragment extends BaseFragment {
                 return false;
             }
         });
+    }
+
+    private void queryWord(String query) {
+        new QueryWordThread(query).start();
     }
 
     private void showHistory() {
@@ -98,5 +80,44 @@ public class SearchFragment extends BaseFragment {
     @Override
     protected int setLayoutRes() {
         return R.layout.fragment_query;
+    }
+
+    private void changeSearchViewStyle() {
+        mQuerySearchView.setIconified(false);
+        try {
+            Class<?> searchViewClass = mQuerySearchView.getClass();
+            Field field = searchViewClass.getDeclaredField("mSearchPlate");
+            field.setAccessible(true);
+            View view = (View) field.get(mQuerySearchView);
+            view.setBackgroundColor(Color.TRANSPARENT);
+        } catch (NoSuchFieldException ne) {
+            Log.e(TAG, " get field ", ne);
+        } catch (IllegalAccessException iae) {
+            Log.e(TAG, " field.get() ", iae);
+        }
+    }
+
+    private class QueryWordThread extends Thread {
+
+        private String mQuery;
+
+        private QueryWordThread(String query) {
+            super();
+            mQuery = query;
+        }
+
+        @Override
+        public void run() {
+            if (mQuery == null) {
+                return;
+            }
+            QueryWord.build(mQueryFinishedHandler, new QueryWord.QueryFinishedListener() {
+                @Override
+                public void onQueryFinished(String result) {
+                    mResultTextView.setText(result);
+                    showHistory();
+                }
+            }).get(mQuery);
+        }
     }
 }

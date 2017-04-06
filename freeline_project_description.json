@@ -1,5 +1,5 @@
 {
-    "android_gradle_plugin_version": "2.3.0",
+    "android_gradle_plugin_version": "2.3.1",
     "apk_path": "E:\\AndroidStudioProjects\\MyEnglish\\app\\build\\outputs\\apk\\app-debug.apk",
     "apt": {
         
@@ -35,7 +35,7 @@
         
     ],
     "freeline_cache_dir": "E:\\AndroidStudioProjects\\MyEnglish",
-    "freeline_gradle_plugin_version": "0.8.6",
+    "freeline_gradle_plugin_version": "0.8.7",
     "ignore_resource_ids": [
         "avd_hide_password_1",
         "avd_hide_password_2",
