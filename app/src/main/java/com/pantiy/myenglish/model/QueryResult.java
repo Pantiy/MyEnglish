@@ -73,6 +73,7 @@ public class QueryResult {
 
     public String getWeb() {
         if (mWeb == null && web != null) {
+            mWeb = "";
             for (int i = 0; i < web.size(); i++) {
                 mWeb += web.get(i).toString();
             }
