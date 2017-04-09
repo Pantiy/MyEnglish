@@ -57,6 +57,6 @@ public class HistoryAdapter extends BaseAdapter {
     }
 
     private void init() {
-        mQueryResults = QueryResultLab.get().getQueryResults();
+        mQueryResults = QueryResultLab.get(mContext).getQueryResults();
     }
 }

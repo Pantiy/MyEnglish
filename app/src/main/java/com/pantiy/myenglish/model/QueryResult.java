@@ -17,6 +17,11 @@ public class QueryResult {
     private Basic basic;
     private List<Web> web;
 
+    private String mQuery;
+    private String mTranslation;
+    private String mBasic;
+    private String mWeb;
+
     private static String transform(String[] before, String divide, String end) {
         String after = "";
         for (int i = 0; i < before.length; i++) {
@@ -33,29 +38,60 @@ public class QueryResult {
     }
 
     public String getQuery() {
-        return query;
+        if (mQuery == null) {
+            mQuery = query;
+        }
+        return mQuery;
+    }
+
+    public void setQuery(String query) {
+        mQuery = query;
     }
 
     public String getTranslation() {
-        return transform(translation, "; ", "");
+        if (mTranslation == null) {
+            mTranslation = transform(translation, "; ", "");
+        }
+        return mTranslation;
+    }
+
+    public void setTranslation(String translation) {
+        mTranslation = translation;
     }
 
     public String getBasic() {
         if (basic == null) {
             return null;
         }
-        return transform(basic.explains, "\n", "");
+        if (mBasic == null) {
+            transform(basic.explains, "\n", "");
+        }
+        return mBasic;
+    }
+
+    public void setBasic(String basic) {
+        mBasic = basic;
     }
 
     public String getWeb() {
         if (web == null) {
             return null;
         }
-        String webs = "";
-        for (int i = 0; i < web.size(); i++) {
-            webs += web.get(i).toString();
+        if (mWeb == null) {
+            mWeb = "";
+            for (int i = 0; i < web.size(); i++) {
+                mWeb += web.get(i).toString();
+            }
         }
-        return webs;
+        return mWeb;
+    }
+
+    public void setWeb(String web) {
+        mWeb = web;
+    }
+
+    public boolean equals(String query) {
+        return this.query.equals(query);
     }
 
     @Override
@@ -66,18 +102,10 @@ public class QueryResult {
         return getQuery() + "\n\n" + getTranslation() + "\n\n" + getBasic() + "\n\n" + getWeb();
     }
 
-    public boolean equals(String query) {
-        return this.query.equals(query);
-    }
-
     private static class Basic {
 
         private String[] explains;
 
-//        @Override
-//        public String toString() {
-//            return transform(explains, "\n", "\n");
-//        }
     }
 
     private static class Web {

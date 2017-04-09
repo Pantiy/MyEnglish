@@ -2,7 +2,6 @@ package com.pantiy.myenglish.fragment;
 
 import android.content.Context;
 import android.widget.TextView;
-
 import com.pantiy.myenglish.R;
 import com.pantiy.myenglish.model.QueryResult;
 
@@ -18,8 +17,10 @@ public class ResultFragment extends BaseFragment {
     private QueryResult mQueryResult;
 
     private Context mContext;
-    private TextView mQueryTv;
-    private TextView mTranslateTv;
+    private TextView mQueryTV;
+    private TextView mTranslateTV;
+    private TextView mBasicTV;
+    private TextView mWebTV;
 
     public static ResultFragment newInstance(Context context, QueryResult queryResult) {
         ResultFragment resultFragment = new ResultFragment();
@@ -29,10 +30,14 @@ public class ResultFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
-        mQueryTv = (TextView) mView.findViewById(R.id.query_textView);
-        mQueryTv.setText(mQueryResult.getQuery());
-        mTranslateTv = (TextView) mView.findViewById(R.id.translate_textView);
-        mTranslateTv.setText(mQueryResult.toString());
+        mQueryTV = (TextView) mView.findViewById(R.id.query_textView);
+        mQueryTV.setText(mQueryResult.getQuery());
+        mTranslateTV = (TextView) mView.findViewById(R.id.translate_textView);
+        mTranslateTV.setText(mQueryResult.getTranslation());
+        mBasicTV = (TextView) mView.findViewById(R.id.basic_textView);
+        mBasicTV.setText(mQueryResult.getBasic());
+        mWebTV = (TextView) mView.findViewById(R.id.web_textView);
+        mWebTV.setText(mQueryResult.getWeb());
     }
 
     @Override

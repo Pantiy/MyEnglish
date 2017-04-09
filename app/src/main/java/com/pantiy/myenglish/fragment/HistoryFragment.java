@@ -2,8 +2,6 @@ package com.pantiy.myenglish.fragment;
 
 import android.content.Context;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.pantiy.myenglish.R;
 import com.pantiy.myenglish.adapter.HistoryAdapter;
 

@@ -6,17 +6,16 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pantiy.myenglish.activity.ResultPagerActivity;
 import com.pantiy.myenglish.adapter.HistoryAdapter;
-import com.pantiy.myenglish.adapter.ResultPagerAdapter;
 import com.pantiy.myenglish.model.QueryResultLab;
 import com.pantiy.myenglish.utils.QueryWord;
 import com.pantiy.myenglish.R;
-import com.pantiy.myenglish.utils.YoudaoClient;
 
 import java.lang.reflect.Field;
 
@@ -73,6 +72,16 @@ public class QueryFragment extends BaseFragment {
                 return false;
             }
         });
+
+        mHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String query = QueryResultLab.get(mContext).getQueryResults().get(position).getQuery();
+                Toast.makeText(mContext, query, Toast.LENGTH_SHORT).show();
+                Intent intent = ResultPagerActivity.newInstance(mContext, query);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -91,7 +100,6 @@ public class QueryFragment extends BaseFragment {
     }
 
     private void changeSearchViewStyle() {
-        mQuerySearchView.setIconified(false);
         try {
             Class<?> searchViewClass = mQuerySearchView.getClass();
             Field field = searchViewClass.getDeclaredField("mSearchPlate");
@@ -119,7 +127,7 @@ public class QueryFragment extends BaseFragment {
             if (mQuery == null) {
                 return;
             }
-            QueryWord.build(mQueryFinishedHandler, new QueryWord.QueryFinishedListener() {
+            QueryWord.build(mContext, mQueryFinishedHandler, new QueryWord.QueryFinishedListener() {
                 @Override
                 public void onQueryFinished(String result) {
                     mHistoryAdapter.notifyDataSetChanged();

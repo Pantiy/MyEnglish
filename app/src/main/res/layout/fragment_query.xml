@@ -15,11 +15,17 @@
         android:iconifiedByDefault="false"
         android:queryHint="@string/search_hint"/>
 
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/query_history"/>
+
     <ListView
         android:id="@+id/history_listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         android:layout_weight="1"/>
 
     <!--<ScrollView-->

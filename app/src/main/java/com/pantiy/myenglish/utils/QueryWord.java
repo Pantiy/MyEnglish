@@ -1,5 +1,6 @@
 package com.pantiy.myenglish.utils;
 
+import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import com.google.gson.Gson;
@@ -19,18 +20,21 @@ public class QueryWord {
 
     private QueryFinishedListener mQueryFinishedListener;
     private Handler mQueryFinishedHandler;
+    private Context mContext;
 
     private static final String TAG = "QueryWord";
 
     private static OkHttpClient sOkHttpClient = new OkHttpClient();
     private static Gson sGson = new Gson();
 
-    public static QueryWord build(Handler queryFinishedHandler, QueryFinishedListener queryFinishedListener) {
-        return new QueryWord(queryFinishedHandler, queryFinishedListener);
+    public static QueryWord build(Context context, Handler queryFinishedHandler,
+                                  QueryFinishedListener queryFinishedListener) {
+        return new QueryWord(context, queryFinishedHandler, queryFinishedListener);
     }
 
 
-    private QueryWord(Handler queryFinishedHandler, QueryFinishedListener queryFinished) {
+    private QueryWord(Context context, Handler queryFinishedHandler, QueryFinishedListener queryFinished) {
+        mContext = context;
         mQueryFinishedHandler = queryFinishedHandler;
         mQueryFinishedListener = queryFinished;
     }
@@ -63,8 +67,9 @@ public class QueryWord {
     }
 
     private void holdResult(QueryResult queryResult) {
-        QueryResultLab queryResultLab = QueryResultLab.get();
+        QueryResultLab queryResultLab = QueryResultLab.get(mContext);
         queryResultLab.getQueryResults().add(queryResult);
+        queryResultLab.addQueryResult(queryResult);
     }
 
     public interface QueryFinishedListener {
