@@ -2,6 +2,7 @@ package com.pantiy.myenglish.Database.QueryResultDatabase;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.util.Log;
 
 import com.pantiy.myenglish.model.QueryResult;
 

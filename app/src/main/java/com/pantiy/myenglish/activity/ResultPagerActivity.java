@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
-
 import com.pantiy.myenglish.R;
 import com.pantiy.myenglish.adapter.ResultPagerAdapter;
 import com.pantiy.myenglish.model.QueryResult;
 import com.pantiy.myenglish.model.QueryResultLab;
-
 import java.util.List;
 
 /**
@@ -78,7 +76,7 @@ public class ResultPagerActivity extends BaseActivity{
     }
 
     private void setCurrentPager(String query) {
-        List<QueryResult> queryResultList = QueryResultLab.get(this).getQueryResults();
+        List<QueryResult> queryResultList = QueryResultLab.get(this).getQueryResultList();
         for (int i = 0; i < queryResultList.size(); i++) {
             if (queryResultList.get(i).equals(query)) {
                 mViewPager.setCurrentItem(i);

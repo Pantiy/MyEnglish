@@ -9,14 +9,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
-
 import com.pantiy.myenglish.activity.ResultPagerActivity;
 import com.pantiy.myenglish.adapter.HistoryAdapter;
+import com.pantiy.myenglish.model.QueryResult;
 import com.pantiy.myenglish.model.QueryResultLab;
 import com.pantiy.myenglish.utils.QueryWord;
 import com.pantiy.myenglish.R;
-
 import java.lang.reflect.Field;
 
 /**
@@ -76,8 +74,7 @@ public class QueryFragment extends BaseFragment {
         mHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String query = QueryResultLab.get(mContext).getQueryResults().get(position).getQuery();
-                Toast.makeText(mContext, query, Toast.LENGTH_SHORT).show();
+                String query = QueryResultLab.get(mContext).getQueryResultList().get(position).getQuery();
                 Intent intent = ResultPagerActivity.newInstance(mContext, query);
                 startActivity(intent);
             }
@@ -92,6 +89,11 @@ public class QueryFragment extends BaseFragment {
 
     private void queryWord(String query) {
         new QueryWordThread(query).start();
+    }
+
+    private void updateHistoryAdapter() {
+        mHistoryAdapter = new HistoryAdapter(mContext);
+        mHistoryListView.setAdapter(mHistoryAdapter);
     }
 
     @Override
@@ -129,8 +131,8 @@ public class QueryFragment extends BaseFragment {
             }
             QueryWord.build(mContext, mQueryFinishedHandler, new QueryWord.QueryFinishedListener() {
                 @Override
-                public void onQueryFinished(String result) {
-                    mHistoryAdapter.notifyDataSetChanged();
+                public void onQueryFinished(QueryResult queryResult) {
+                    updateHistoryAdapter();
                     Intent intent = ResultPagerActivity.newInstance(mContext, mQuery);
                     startActivity(intent);
                 }

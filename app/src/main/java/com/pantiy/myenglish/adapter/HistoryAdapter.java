@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.pantiy.myenglish.R;
 import com.pantiy.myenglish.model.QueryResult;
 import com.pantiy.myenglish.model.QueryResultLab;
-
 import java.util.List;
 
 /**
@@ -22,7 +20,7 @@ import java.util.List;
 
 public class HistoryAdapter extends BaseAdapter {
 
-    private List<QueryResult> mQueryResults;
+    private List<QueryResult> mQueryResultList;
 
     private Context mContext;
 
@@ -33,12 +31,12 @@ public class HistoryAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mQueryResults.size();
+        return mQueryResultList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mQueryResults.get(position);
+        return mQueryResultList.get(position);
     }
 
     @Override
@@ -51,12 +49,12 @@ public class HistoryAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_for_history, parent, false);
             TextView query = (TextView) convertView.findViewById(R.id.query_textView);
-            query.setText(mQueryResults.get(position).getQuery());
+            query.setText(mQueryResultList.get(position).getQuery());
         }
         return convertView;
     }
 
     private void init() {
-        mQueryResults = QueryResultLab.get(mContext).getQueryResults();
+        mQueryResultList = QueryResultLab.get(mContext).getQueryResultList();
     }
 }

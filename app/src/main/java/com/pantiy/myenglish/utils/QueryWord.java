@@ -10,6 +10,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Pantiy on 2017/3/22.
@@ -39,10 +40,19 @@ public class QueryWord {
         mQueryFinishedListener = queryFinished;
     }
 
-    public void get(String query) {
-
+    public void get(final String query) {
+        if (isReady(query) != null) {
+            mQueryFinishedHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mQueryFinishedListener.onQueryFinished(isReady(query));
+                }
+            });
+            return;
+        }
         try {
             Request request = new Request.Builder().url(YoudaoClient.getUrl(query)).build();
+            Log.e(TAG, YoudaoClient.getUrl(query));
             Response response = sOkHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
                 final String result = response.body().string();
@@ -58,21 +68,30 @@ public class QueryWord {
         }
     }
 
-    private String parseResult(String result) {
+    private QueryResult parseResult(String result) {
         QueryResult queryResult = sGson.fromJson(result, QueryResult.class);
         if (queryResult.getErrorCode() == 0) {
             holdResult(queryResult);
         }
-        return sGson.fromJson(result, QueryResult.class).toString();
+        return queryResult;
     }
 
     private void holdResult(QueryResult queryResult) {
         QueryResultLab queryResultLab = QueryResultLab.get(mContext);
-        queryResultLab.getQueryResults().add(queryResult);
         queryResultLab.addQueryResult(queryResult);
     }
 
+    private QueryResult isReady(String query) {
+        List<QueryResult> queryResultList = QueryResultLab.get(mContext).getQueryResultList();
+        for (int i = 0; i < queryResultList.size(); i++) {
+            if (queryResultList.get(i).equals(query)) {
+                return queryResultList.get(i);
+            }
+        }
+        return null;
+    }
+
     public interface QueryFinishedListener {
-        void onQueryFinished(String result);
+        void onQueryFinished(QueryResult queryResult);
     }
 }

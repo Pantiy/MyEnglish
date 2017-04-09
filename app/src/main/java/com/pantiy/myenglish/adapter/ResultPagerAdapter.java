@@ -34,11 +34,11 @@ public class ResultPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return QueryResultLab.get(mContext).getQueryResults().size();
+        return QueryResultLab.get(mContext).getQueryResultList().size();
     }
 
     private QueryResult getQueryResult(int position) {
-        List<QueryResult> queryResultList = QueryResultLab.get(mContext).getQueryResults();
+        List<QueryResult> queryResultList = QueryResultLab.get(mContext).getQueryResultList();
         String query = queryResultList.get(position).getQuery();
         QueryResult queryResult = new QueryResult();
         for (int i = 0; i < queryResultList.size(); i++) {

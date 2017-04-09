@@ -1,7 +1,5 @@
 package com.pantiy.myenglish.model;
 
-import android.util.Log;
-
 import java.util.List;
 
 /**
@@ -51,6 +49,9 @@ public class QueryResult {
     public String getTranslation() {
         if (mTranslation == null) {
             mTranslation = transform(translation, "; ", "");
+            if (mTranslation.charAt(mTranslation.length() - 1) == ',') {
+                mTranslation = mTranslation.substring(0, mTranslation.length() - 1);
+            }
         }
         return mTranslation;
     }
@@ -60,11 +61,8 @@ public class QueryResult {
     }
 
     public String getBasic() {
-        if (basic == null) {
-            return null;
-        }
-        if (mBasic == null) {
-            transform(basic.explains, "\n", "");
+        if (mBasic == null && basic != null) {
+            mBasic = transform(basic.explains, " \n", "");
         }
         return mBasic;
     }
@@ -74,11 +72,7 @@ public class QueryResult {
     }
 
     public String getWeb() {
-        if (web == null) {
-            return null;
-        }
-        if (mWeb == null) {
-            mWeb = "";
+        if (mWeb == null && web != null) {
             for (int i = 0; i < web.size(); i++) {
                 mWeb += web.get(i).toString();
             }
@@ -91,7 +85,7 @@ public class QueryResult {
     }
 
     public boolean equals(String query) {
-        return this.query.equals(query);
+        return this.getQuery().equals(query);
     }
 
     @Override
@@ -103,9 +97,7 @@ public class QueryResult {
     }
 
     private static class Basic {
-
         private String[] explains;
-
     }
 
     private static class Web {
