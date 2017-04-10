@@ -1,14 +1,21 @@
 package com.pantiy.myenglish.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.pantiy.myenglish.activity.ResultPagerActivity;
 import com.pantiy.myenglish.adapter.HistoryAdapter;
 import com.pantiy.myenglish.model.QueryResult;
@@ -26,6 +33,9 @@ public class QueryFragment extends BaseFragment {
 
     private static final String TAG = "QueryFragment";
 
+    private static final String DELETE = "删除";
+    private static final String ALREADY_DELETE = "已删除";
+
     private Handler mQueryFinishedHandler;
 
     private HistoryAdapter mHistoryAdapter;
@@ -33,6 +43,7 @@ public class QueryFragment extends BaseFragment {
     private Context mContext;
     private SearchView mQuerySearchView;
     private ListView mHistoryListView;
+    private Button mDeleteAllBtn;
 
     public static QueryFragment newInstance(Context context) {
         QueryFragment queryFragment = new QueryFragment();
@@ -46,6 +57,7 @@ public class QueryFragment extends BaseFragment {
         mQuerySearchView = (SearchView) mView.findViewById(R.id.query_searchView);
         changeSearchViewStyle();
         mHistoryListView = (ListView) mView.findViewById(R.id.history_listView);
+        mDeleteAllBtn = (Button) mView.findViewById(R.id.deleteAll_button);
     }
 
     @Override
@@ -62,6 +74,7 @@ public class QueryFragment extends BaseFragment {
             public boolean onQueryTextSubmit(String query) {
                 queryWord(query);
                 mQuerySearchView.clearFocus();
+                mQuerySearchView.setQuery(null, false);
                 return true;
             }
 
@@ -77,6 +90,50 @@ public class QueryFragment extends BaseFragment {
                 String query = QueryResultLab.get(mContext).getQueryResultList().get(position).getQuery();
                 Intent intent = ResultPagerActivity.newInstance(mContext, query);
                 startActivity(intent);
+            }
+        });
+
+        mHistoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) parent.findViewById(R.id.query_textView);
+                final String query = textView.getText().toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setItems(new String[]{getResources().getString(R.string.delete)},
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        QueryResultLab.get(mContext).deleteQueryResult(query);
+                        updateHistoryAdapter();
+                        Toast.makeText(mContext, R.string.already_delete, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+                mQuerySearchView.clearFocus();
+                return true;
+            }
+        });
+
+        mDeleteAllBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (QueryResultLab.get(mContext).getQueryResultList().size() == 0) {
+                    Toast.makeText(mContext, R.string.empty_history, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                new AlertDialog.Builder(mContext)
+                        .setTitle(R.string.dialog_title)
+                        .setMessage(R.string.dialog_message)
+                        .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                QueryResultLab.get(mContext).deleteQueryResultList();
+                                updateHistoryAdapter();
+                            }
+                        })
+                        .setNegativeButton(R.string.dialog_negative, null)
+                        .show();
+                mQuerySearchView.clearFocus();
             }
         });
     }

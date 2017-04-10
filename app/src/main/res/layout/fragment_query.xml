@@ -23,12 +23,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/query_history"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
 
     <ListView
         android:id="@+id/history_listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/deleteAll_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="@string/delete_all"
+        android:textSize="16sp"/>
 
 </LinearLayout>

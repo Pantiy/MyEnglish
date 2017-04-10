@@ -4,7 +4,15 @@
 
     <string name="search_hint">请输入</string>
     <string name="query_button">搜索</string>
-    <string name="query_history">搜索历史</string>
+    <string name="query_history">搜索记录</string>
+    <string name="delete_all">清空搜索记录</string>
+    <string name="delete">删除</string>
+    <string name="already_delete">已删除</string>
+    <string name="dialog_title">请确认</string>
+    <string name="dialog_message">将会清空所有搜索记录</string>
+    <string name="dialog_positive">清空</string>
+    <string name="dialog_negative">取消</string>
+    <string name="empty_history">没有搜索记录</string>
 
     <string name="translate">翻译</string>
     <string name="basic">基础释义</string>

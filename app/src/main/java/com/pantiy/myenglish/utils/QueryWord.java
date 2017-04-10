@@ -52,7 +52,6 @@ public class QueryWord {
         }
         try {
             Request request = new Request.Builder().url(YoudaoClient.getUrl(query)).build();
-            Log.e(TAG, YoudaoClient.getUrl(query));
             Response response = sOkHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
                 final String result = response.body().string();

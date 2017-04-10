@@ -57,7 +57,11 @@ public class QueryResultLab {
     }
 
     public void deleteQueryResult(String query) {
-        mSQLiteDatabase.delete(QueryResultDatabase.NAME, Table.QUERY, new String[]{query});
+        mSQLiteDatabase.delete(QueryResultDatabase.NAME, Table.QUERY + "=?", new String[]{query});
+    }
+
+    public void deleteQueryResultList() {
+        mSQLiteDatabase.execSQL("DELETE FROM " + QueryResultDatabase.NAME);
     }
 
     private ContentValues getContentValues(QueryResult queryResult) {
