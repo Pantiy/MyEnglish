@@ -11,16 +11,18 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:textSize="25sp"/>
+        android:textColor="#635656"
+        android:textSize="30sp"/>
 
     <TextView
         style="?android:listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/translate"/>
+        android:text="@string/translate"
+        android:textSize="17sp"/>
 
     <TextView
-        android:id="@+id/translate_textView"
+        android:id="@+id/translation_textView"
         style="@style/ResultTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -29,7 +31,8 @@
         style="?android:listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/basic"/>
+        android:text="@string/basic"
+        android:textSize="17sp"/>
 
     <TextView
         android:id="@+id/basic_textView"
@@ -41,7 +44,8 @@
         style="?android:listSeparatorTextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/web"/>
+        android:text="@string/web"
+        android:textSize="17sp"/>
 
     <TextView
         android:id="@+id/web_textView"

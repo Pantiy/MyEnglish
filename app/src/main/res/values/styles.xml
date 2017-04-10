@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:http="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -12,6 +12,7 @@
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textSize">16dp</item>
     </style>
 
 </resources>

@@ -32,7 +32,7 @@ public class ResultFragment extends BaseFragment {
     protected void initViews() {
         mQueryTV = (TextView) mView.findViewById(R.id.query_textView);
         mQueryTV.setText(mQueryResult.getQuery());
-        mTranslateTV = (TextView) mView.findViewById(R.id.translate_textView);
+        mTranslateTV = (TextView) mView.findViewById(R.id.translation_textView);
         mTranslateTV.setText(mQueryResult.getTranslation());
         mBasicTV = (TextView) mView.findViewById(R.id.basic_textView);
         mBasicTV.setText(mQueryResult.getBasic());

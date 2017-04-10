@@ -56,6 +56,10 @@ public class QueryResultLab {
         mSQLiteDatabase.insert(QueryResultDatabase.NAME, null, contentValues);
     }
 
+    public void deleteQueryResult(String query) {
+        mSQLiteDatabase.delete(QueryResultDatabase.NAME, Table.QUERY, new String[]{query});
+    }
+
     private ContentValues getContentValues(QueryResult queryResult) {
 
         ContentValues contentValues = new ContentValues();
