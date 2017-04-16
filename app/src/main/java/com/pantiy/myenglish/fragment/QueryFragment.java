@@ -33,9 +33,6 @@ public class QueryFragment extends BaseFragment {
 
     private static final String TAG = "QueryFragment";
 
-    private static final String DELETE = "删除";
-    private static final String ALREADY_DELETE = "已删除";
-
     private Handler mQueryFinishedHandler;
 
     private HistoryAdapter mHistoryAdapter;
@@ -197,3 +194,4 @@ public class QueryFragment extends BaseFragment {
         }
     }
 }
+
