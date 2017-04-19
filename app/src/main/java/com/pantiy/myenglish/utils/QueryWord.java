@@ -25,7 +25,7 @@ public class QueryWord {
 
     private static final String TAG = "QueryWord";
 
-    private static OkHttpClient sOkHttpClient = new OkHttpClient();
+//    private static OkHttpClient sOkHttpClient = new OkHttpClient();
     private static Gson sGson = new Gson();
 
     public static QueryWord build(Context context, Handler queryFinishedHandler,
@@ -50,11 +50,9 @@ public class QueryWord {
             });
             return;
         }
-        try {
-            Request request = new Request.Builder().url(YoudaoClient.getUrl(query)).build();
-            Response response = sOkHttpClient.newCall(request).execute();
-            if (response.isSuccessful()) {
-                final String result = response.body().string();
+        Network.create(YoudaoClient.getUrl(query), new Network.SuccessListener() {
+            @Override
+            public void onSuccess(final String result) {
                 mQueryFinishedHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -62,9 +60,25 @@ public class QueryWord {
                     }
                 });
             }
-        } catch (IOException ie) {
-            Log.e(TAG, "Failed ", ie);
-        }
+            @Override
+            public void onFail() {
+
+            }}).start();
+//        try {
+//            Request request = new Request.Builder().url(YoudaoClient.getUrl(query)).build();
+//            Response response = sOkHttpClient.newCall(request).execute();
+//            if (response.isSuccessful()) {
+//                final String result = response.body().string();
+//                mQueryFinishedHandler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mQueryFinishedListener.onQueryFinished(parseResult(result));
+//                    }
+//                });
+//            }
+//        } catch (IOException ie) {
+//            Log.e(TAG, "Failed ", ie);
+//        }
     }
 
     private QueryResult parseResult(String result) {
