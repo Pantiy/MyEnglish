@@ -93,7 +93,7 @@ public class QueryFragment extends BaseFragment {
         mHistoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) parent.findViewById(R.id.query_textView);
+                TextView textView = (TextView) view.findViewById(R.id.query_textView);
                 final String query = textView.getText().toString();
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setItems(new String[]{getResources().getString(R.string.delete)},

@@ -46,11 +46,9 @@ public class HistoryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_for_history, parent, false);
-            TextView query = (TextView) convertView.findViewById(R.id.query_textView);
-            query.setText(mQueryResultList.get(position).getQuery());
-        }
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_for_history, parent, false);
+        TextView query = (TextView) convertView.findViewById(R.id.query_textView);
+        query.setText(mQueryResultList.get(position).getQuery());
         return convertView;
     }
 
